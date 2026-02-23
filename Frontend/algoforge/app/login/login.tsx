@@ -3,6 +3,7 @@
 import { useActionState } from "react";
 import { loginAction } from "./actions";
 import "./login.css";
+import Link from "next/link";
 
 export default function LoginPage() {
 
@@ -52,7 +53,7 @@ export default function LoginPage() {
                 </form>
 
                 <div className="login-footer">
-                    <p>Don't have an account? <a href="/register">Sign up</a></p>
+                    <p>Don't have an account? <Link href="/signup">Sign Up</Link></p>
                 </div>
             </div>
         </div>
