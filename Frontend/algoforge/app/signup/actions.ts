@@ -1,5 +1,8 @@
 "use server"
 
+import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
 export async function signupAction(prevState: any, formData: FormData) {
     const username = formData.get("username") as string;
     const email = formData.get("email") as string;
@@ -20,13 +23,17 @@ export async function signupAction(prevState: any, formData: FormData) {
             return { error: data.error || "Signup failed" };
         }
 
-        return { 
-            success: true, 
-            token: data.token, 
-            user: data.user 
-        };
+        const cookieStore = await cookies();
+        cookieStore.set("token", data.token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            maxAge: 60 * 60 * 24,
+            path: "/",
+        });
 
     } catch (error) {
         return { error: "Could not connect to server" };
     }
+
+    redirect("/homepage");
 }
