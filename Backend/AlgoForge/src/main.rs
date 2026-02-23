@@ -1,3 +1,6 @@
+mod auth;
+mod handlers;
+
 use axum::{extract::State, Router, routing::get};
 use sqlx::{ postgres::PgPoolOptions, FromRow, PgPool };
 use std::env;
