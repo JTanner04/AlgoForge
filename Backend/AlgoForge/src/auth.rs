@@ -61,3 +61,64 @@ pub enum AuthError {
     InternalError,
     InvalidToken,
 }
+
+// Creating response for autherror
+impl IntoResponse for AuthError {
+    fn into_response(self) -> Response {
+        let (status, message) = match self {
+            AuthError::InvalidCredentials => (StatusCode::UNAUTHORIZED, "Invalid credentials!"),
+            AuthError::UserAlreadyExists => (StatusCode::CONFLICT, "User already exists"),
+            AuthError::InternalError => (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error"),
+            AuthError::InvalidToken => (StatusCode::UNAUTHORIZED, "Invalid token"),
+        };
+
+        let body = serde_json::json!({"error": message });
+        (status, Json(body)).into_response()
+    }
+}
+
+use bcrypt::{hash, verify, DEFAULT_COST};
+
+//Hashing password for better security
+pub fn hash_password(password: &str) -> Result<String, AuthError>{
+    hash(password, DEFAULT_COST).map_err(|_| AuthError::InternalError)
+}
+
+//Checking if the password actually matches
+pub fn verify_password(password: &str, hash: &str) -> Result<bool, AuthError> {
+    verify(password, hash).map_err(|_| AuthError::InternalError)
+}
+
+use chrono::{Duration, Utc};
+use jsonwebtoken::{decode, encode, DecodingKey, EncodingKey, Header, Validation};
+
+// Create a JWT token for a user
+pub fn create_token(user_id: &Uuid, email: &str, secret: &str) -> Result<String, AuthError> {
+    let now = Utc::now();
+    let expires_at = now + Duration::hours(24);
+
+    let claims = Claims {
+        sub: user_id.to_string(),
+        email: email.to_string(),
+        exp: expires_at.timestamp() as usize,
+        iat: now.timestamp() as usize,
+    };
+
+    encode(
+        &Header::default(),
+        &claims,
+        &EncodingKey::from_secret(secret.as_bytes()),
+    )
+    .map_err(|_| AuthError::InternalError)
+}
+
+//Verifies JWT token that was created
+pub fn verify_token(token: &str, secret: &str) -> Result<Claims, AuthError> {
+    decode::<Claims>(
+        token,
+        &DecodingKey::from_secret(secret.as_bytes()),
+        &Validation::default(),
+    )
+    .map(|data| data.claims)
+    .map_err(|_| AuthError::InvalidToken)
+}
