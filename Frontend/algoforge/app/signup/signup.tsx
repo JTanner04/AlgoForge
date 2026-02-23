@@ -1,9 +1,14 @@
 "use client"
 
+import { useActionState } from "react";
+import { signupAction } from "./actions";
 import "./signup.css";
 import Link from "next/link";
 
 export default function SignupPage() {
+
+    const [state, formAction, isPending] = useActionState(signupAction, null);
+
     return (
         <div className="signup-container">
             <div className="signup-card">
@@ -13,7 +18,7 @@ export default function SignupPage() {
                     <p className="signup-subtitle">Join AlgoForge and start building</p>
                 </div>
 
-                <form className="signup-form">
+                <form action={formAction} className="signup-form">
                     <div className="input-group">
                         <input
                             type="text"
@@ -42,14 +47,22 @@ export default function SignupPage() {
                         />
                     </div>
 
-                    <button type="submit" className="signup-button">
-                        <span>Create Account</span>
-                    </button>
+                    {state?.error && <p className="error-message">{state.error}</p>}
 
+                    <button
+                        type="submit"
+                        disabled={isPending}
+                        className="signup-button"
+                    >
+                        <span>
+                            {isPending && <span className="loading-spinner"></span>}
+                            {isPending ? "Creating account..." : "Sign Up"}
+                        </span>
+                    </button>
                 </form>
 
                 <div className="signup-footer">
-                    <p>Already have an account? <Link href="/login">Login</Link> </p>
+                    <p>Already have an account? <Link href="/login">Log In</Link></p>
                 </div>
             </div>
         </div>
