@@ -43,7 +43,12 @@ export default function HomePage() {
 
         // After hyperspace animation, navigate to the level
         setTimeout(() => {
-            router.push(`/level/${level.id}`);
+            // Route to the appropriate world's first level
+            if (level.id === 1) {
+                router.push('/homepage/Arrays&Strings/BasicTraversal');
+            } else {
+                router.push(`/level/${level.id}`);
+            }
         }, 2500);
     }, [router]);
 

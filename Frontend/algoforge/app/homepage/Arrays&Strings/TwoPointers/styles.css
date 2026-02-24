@@ -1,0 +1,189 @@
+/* Import base styles */
+@import '../BasicTraversal/styles.css';
+
+/* Two Pointer Specific Styles */
+.problem-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.problem-card h3 {
+    margin: 0 0 0.75rem 0;
+    color: #fbbf24;
+}
+
+.problem-card p {
+    margin: 0 0 0.5rem 0;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.problem-card .hint {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    font-style: italic;
+}
+
+.target-display {
+    text-align: center;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.target-display strong {
+    color: #fbbf24;
+    font-size: 1.5rem;
+}
+
+/* Two Pointer Array */
+.array-container.two-pointer {
+    min-height: 160px;
+    align-items: stretch;
+}
+
+.pointer-indicators {
+    height: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.pointer {
+    font-weight: 700;
+    font-size: 0.9rem;
+    animation: bounce 0.5s ease infinite alternate;
+}
+
+.left-pointer {
+    color: #22c55e;
+}
+
+.right-pointer {
+    color: #f97316;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(5px); }
+}
+
+.array-cell {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+}
+
+.array-cell.left-active {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    border-color: #4ade80;
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.5);
+}
+
+.array-cell.right-active {
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    border-color: #fb923c;
+    box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);
+}
+
+.array-cell.in-range {
+    background: rgba(99, 102, 241, 0.2);
+    border-color: rgba(99, 102, 241, 0.3);
+}
+
+.array-cell.out-range {
+    background: rgba(255, 255, 255, 0.03);
+    opacity: 0.4;
+}
+
+.array-cell.found {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b) !important;
+    border-color: #fcd34d !important;
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.6) !important;
+    animation: pulse-found 0.5s ease infinite alternate;
+}
+
+@keyframes pulse-found {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+}
+
+.left-color {
+    color: #22c55e !important;
+}
+
+.right-color {
+    color: #f97316 !important;
+}
+
+.found-color {
+    color: #fbbf24 !important;
+    font-size: 2rem !important;
+}
+
+.success-message {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(34, 197, 94, 0.2);
+    border-radius: 12px;
+    color: #4ade80;
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1rem 0;
+    animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Log Panel */
+.log-panel {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.log-panel h3 {
+    margin: 0 0 1rem 0;
+}
+
+.log-entries {
+    max-height: 200px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.log-empty {
+    color: rgba(255, 255, 255, 0.4);
+    text-align: center;
+    font-style: italic;
+}
+
+.log-entry {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-family: monospace;
+    font-size: 0.9rem;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-step {
+    color: #a78bfa;
+    font-weight: 600;
+}
