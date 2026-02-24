@@ -1,42 +1,88 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import "./main.css";
 
-// Level data - you can expand this with your actual content
+// Algorithm Worlds - each level is a planet to explore
 const levels = [
-    { id: 1, title: "Variables", icon: "📦", status: "completed", xp: 50 },
-    { id: 2, title: "Data Types", icon: "🔢", status: "completed", xp: 75 },
-    { id: 3, title: "Operators", icon: "➕", status: "completed", xp: 60 },
-    { id: 4, title: "Conditionals", icon: "🔀", status: "current", xp: 100 },
-    { id: 5, title: "Loops", icon: "🔄", status: "locked", xp: 120 },
-    { id: 6, title: "Functions", icon: "⚡", status: "locked", xp: 150 },
-    { id: 7, title: "Arrays", icon: "📚", status: "locked", xp: 130 },
-    { id: 8, title: "Objects", icon: "🎯", status: "locked", xp: 140 },
-    { id: 9, title: "Classes", icon: "🏗️", status: "locked", xp: 175 },
-    { id: 10, title: "Recursion", icon: "🌀", status: "locked", xp: 200 },
-    { id: 11, title: "Sorting", icon: "📊", status: "locked", xp: 180 },
-    { id: 12, title: "Searching", icon: "🔍", status: "locked", xp: 160 },
+    { id: 1, title: "Arrays & Strings", icon: "🪐", status: "completed", xp: 100, color: "#22c55e" },
+    { id: 2, title: "Hashing (Maps & Sets)", icon: "🌍", status: "completed", xp: 120, color: "#3b82f6" },
+    { id: 3, title: "Recursion & Backtracking", icon: "🌙", status: "completed", xp: 150, color: "#94a3b8" },
+    { id: 4, title: "Linked Lists", icon: "🔴", status: "current", xp: 130, color: "#ef4444" },
+    { id: 5, title: "Stacks & Queues", icon: "🟠", status: "locked", xp: 140, color: "#f97316" },
+    { id: 6, title: "Trees", icon: "💜", status: "locked", xp: 180, color: "#a855f7" },
+    { id: 7, title: "Heaps & Priority Queues", icon: "🌊", status: "locked", xp: 160, color: "#06b6d4" },
+    { id: 8, title: "Graphs", icon: "⭐", status: "locked", xp: 200, color: "#fbbf24" },
+    { id: 9, title: "Dynamic Programming", icon: "🪨", status: "locked", xp: 250, color: "#78716c" },
 ];
 
-export default function HomePage() {
-    const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+// Generate random stars for the hyperspace effect
+const generateStars = (count: number) => {
+    return Array.from({ length: count }, (_, i) => ({
+        id: i,
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+        size: Math.random() * 2 + 1,
+    }));
+};
 
-    const handleLevelClick = (level: typeof levels[0]) => {
-        if (level.status !== "locked") {
-            setSelectedLevel(level.id);
-        }
-    };
+const stars = generateStars(200);
+
+export default function HomePage() {
+    const router = useRouter();
+    const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
+    const [isHyperspace, setIsHyperspace] = useState(false);
+    const [targetWorld, setTargetWorld] = useState<typeof levels[0] | null>(null);
+
+    const handleTravelToWorld = useCallback((level: typeof levels[0]) => {
+        if (level.status === "locked") return;
+        
+        setTargetWorld(level);
+        setIsHyperspace(true);
+
+        // After hyperspace animation, navigate to the level
+        setTimeout(() => {
+            router.push(`/level/${level.id}`);
+        }, 2500);
+    }, [router]);
 
     const getNodePosition = (index: number) => {
         // Create a winding path effect
-        const amplitude = 80; // How far left/right the path goes
+        const amplitude = 80;
         const offset = Math.sin(index * 0.8) * amplitude;
         return offset;
     };
 
     return (
-        <div className="homepage-container">
+        <div className={`homepage-container ${isHyperspace ? 'hyperspace-active' : ''}`}>
+            {/* Hyperspace Overlay */}
+            {isHyperspace && (
+                <div className="hyperspace-overlay">
+                    <div className="stars-container">
+                        {stars.map((star) => (
+                            <div
+                                key={star.id}
+                                className="star-streak"
+                                style={{
+                                    left: `${star.x}%`,
+                                    top: `${star.y}%`,
+                                    width: `${star.size}px`,
+                                    animationDelay: `${Math.random() * 0.3}s`,
+                                }}
+                            />
+                        ))}
+                    </div>
+                    <div className="hyperspace-destination">
+                        <div className="destination-planet" style={{ background: `radial-gradient(circle at 30% 30%, ${targetWorld?.color}, #000)` }}>
+                            <span className="destination-icon">{targetWorld?.icon}</span>
+                        </div>
+                        <h2 className="destination-title">Traveling to {targetWorld?.title}</h2>
+                        <p className="destination-subtitle">Entering hyperspace...</p>
+                    </div>
+                </div>
+            )}
+
             {/* Sidebar */}
             <aside className="sidebar">
                 <div className="sidebar-logo">
@@ -80,47 +126,90 @@ export default function HomePage() {
             {/* Main Content - Level Path */}
             <main className="main-content">
                 <div className="path-header">
-                    <h1>Algorithm Fundamentals</h1>
-                    <p>Master the building blocks of programming</p>
+                    <h1>Algorithm Galaxy</h1>
+                    <p>Explore worlds and master data structures & algorithms</p>
                 </div>
 
                 <div className="level-path">
-                    {/* SVG Path connecting nodes */}
-                    <svg className="path-line" viewBox="0 0 200 1400" preserveAspectRatio="none">
-                        <path
-                            d={levels.map((_, i) => {
-                                const x = 100 + getNodePosition(i);
-                                const y = 60 + i * 110;
-                                return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
-                            }).join(" ")}
-                            fill="none"
-                            stroke="rgba(99, 102, 241, 0.3)"
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
-                        {/* Completed path overlay */}
-                        <path
-                            d={levels.slice(0, levels.findIndex(l => l.status === "current") + 1).map((_, i) => {
-                                const x = 100 + getNodePosition(i);
-                                const y = 60 + i * 110;
-                                return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
-                            }).join(" ")}
-                            fill="none"
-                            stroke="url(#pathGradient)"
-                            strokeWidth="4"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                        />
+                    {/* SVG Path connecting nodes - smooth curved line */}
+                    <svg className="path-line" viewBox="0 0 300 1250" preserveAspectRatio="none">
+                        {/* Glow filter for the path */}
                         <defs>
+                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                                <feMerge>
+                                    <feMergeNode in="coloredBlur"/>
+                                    <feMergeNode in="SourceGraphic"/>
+                                </feMerge>
+                            </filter>
                             <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" stopColor="#22c55e" />
                                 <stop offset="100%" stopColor="#6366f1" />
                             </linearGradient>
+                            <linearGradient id="lockedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                <stop offset="0%" stopColor="rgba(99, 102, 241, 0.3)" />
+                                <stop offset="100%" stopColor="rgba(99, 102, 241, 0.15)" />
+                            </linearGradient>
                         </defs>
+                        
+                        {/* Background path (locked portion) */}
+                        <path
+                            d={(() => {
+                                let path = "";
+                                const nodeSpacing = 138; // Match CSS gap
+                                levels.forEach((_, i) => {
+                                    const x = 150 + getNodePosition(i);
+                                    const y = 55 + i * nodeSpacing;
+                                    if (i === 0) {
+                                        path += `M ${x} ${y}`;
+                                    } else {
+                                        const prevX = 150 + getNodePosition(i - 1);
+                                        const prevY = 55 + (i - 1) * nodeSpacing;
+                                        const cpY = (prevY + y) / 2;
+                                        path += ` C ${prevX} ${cpY}, ${x} ${cpY}, ${x} ${y}`;
+                                    }
+                                });
+                                return path;
+                            })()}
+                            fill="none"
+                            stroke="url(#lockedGradient)"
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            filter="url(#glow)"
+                            strokeDasharray="12 8"
+                        />
+                        
+                        {/* Completed/Active path overlay */}
+                        <path
+                            d={(() => {
+                                let path = "";
+                                const nodeSpacing = 138; // Match CSS gap
+                                const activeIndex = levels.findIndex(l => l.status === "current");
+                                levels.slice(0, activeIndex + 1).forEach((_, i) => {
+                                    const x = 150 + getNodePosition(i);
+                                    const y = 55 + i * nodeSpacing;
+                                    if (i === 0) {
+                                        path += `M ${x} ${y}`;
+                                    } else {
+                                        const prevX = 150 + getNodePosition(i - 1);
+                                        const prevY = 55 + (i - 1) * nodeSpacing;
+                                        const cpY = (prevY + y) / 2;
+                                        path += ` C ${prevX} ${cpY}, ${x} ${cpY}, ${x} ${y}`;
+                                    }
+                                });
+                                return path;
+                            })()}
+                            fill="none"
+                            stroke="url(#pathGradient)"
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            filter="url(#glow)"
+                        />
                     </svg>
 
-                    {/* Level Nodes */}
+                    {/* Level Nodes - Planets */}
                     <div className="nodes-container">
                         {levels.map((level, index) => (
                             <div
@@ -131,11 +220,18 @@ export default function HomePage() {
                                 }}
                             >
                                 <button
-                                    className={`level-node ${level.status}`}
-                                    onClick={() => handleLevelClick(level)}
+                                    className={`level-node planet ${level.status}`}
+                                    onClick={() => handleTravelToWorld(level)}
                                     disabled={level.status === "locked"}
+                                    style={{
+                                        '--planet-color': level.color,
+                                    } as React.CSSProperties}
                                 >
-                                    <span className="node-icon">{level.icon}</span>
+                                    <div className="planet-surface">
+                                        <span className="node-icon">{level.icon}</span>
+                                    </div>
+                                    <div className="planet-ring"></div>
+                                    <div className="planet-glow"></div>
                                     {level.status === "completed" && (
                                         <span className="node-check">✓</span>
                                     )}
@@ -190,17 +286,23 @@ export default function HomePage() {
                                     ></div>
                                 </div>
                             </div>
-                            <button className="start-button">
-                                {levels.find(l => l.id === selectedLevel)?.status === "completed" 
-                                    ? "Practice Again" 
-                                    : "Start Lesson"}
+                            <button 
+                                className="start-button travel-button"
+                                onClick={() => {
+                                    const level = levels.find(l => l.id === selectedLevel);
+                                    if (level) handleTravelToWorld(level);
+                                }}
+                            >
+                                🚀 {levels.find(l => l.id === selectedLevel)?.status === "completed" 
+                                    ? "Revisit World" 
+                                    : "Travel to World"}
                             </button>
                         </div>
                     </div>
                 ) : (
                     <div className="detail-empty">
-                        <span className="empty-icon">👆</span>
-                        <p>Select a lesson to see details</p>
+                        <span className="empty-icon">🚀</span>
+                        <p>Click a world to travel there!</p>
                     </div>
                 )}
 
