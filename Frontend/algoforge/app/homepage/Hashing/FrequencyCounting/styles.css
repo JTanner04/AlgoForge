@@ -1,0 +1,69 @@
+@import "../../shared-level-styles.css";
+
+.hash-map {
+    display: flex;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    margin: 1rem 0 1.5rem 0;
+    align-items: center;
+}
+
+.kv-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 0.6rem 0.9rem;
+    border-radius: 12px;
+    display: flex;
+    gap: 0.8rem;
+    align-items: center;
+    min-width: 72px;
+    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+}
+
+.kv-key {
+    font-weight: 800;
+    color: #fbbf24;
+    font-size: 0.95rem;
+}
+
+.kv-val {
+    background: rgba(255,255,255,0.04);
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-weight: 700;
+    color: white;
+    min-width: 28px;
+    text-align: center;
+}
+
+.kv-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.kv-table th, .kv-table td {
+    padding: 1rem 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.kv-table th { text-align: center; color: rgba(255,255,255,0.85); }
+
+.kv-table td { text-align: center; color: rgba(255,255,255,0.6); }
+
+.empty {
+    color: rgba(255,255,255,0.45);
+    font-style: italic;
+}
+
+.input-text {
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    padding: 0.8rem;
+    border-radius: 12px;
+    color: white;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Fira Code', monospace;
+}
+
+.next-level { display:flex; justify-content:center; margin-top: 2rem; }

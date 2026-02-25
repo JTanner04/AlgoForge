@@ -1,0 +1,15 @@
+@import "../../shared-level-styles.css";
+
+.array-row { display:flex; gap:0.6rem; margin:1rem 0; }
+.array-cell { padding:0.6rem 0.8rem; background:rgba(255,255,255,0.04); border-radius:8px; min-width:48px; text-align:center; }
+.array-cell.visited { background:linear-gradient(90deg,#6366f1,#a855f7); color:white; }
+.array-cell.match { box-shadow:0 0 20px rgba(16,185,129,0.4); transform:scale(1.05); }
+
+.hash-map { display:flex; gap:0.6rem; flex-wrap:wrap; margin:1rem 0; }
+.kv-card { background:rgba(255,255,255,0.05); padding:0.5rem 0.8rem; border-radius:8px; }
+.kv-card.highlight { border:2px solid #f59e0b; }
+
+.success-message { margin-top:1rem; color:#10b981; font-weight:700; }
+
+.controls { margin-top:1rem; display:flex; gap:0.6rem; }
+.control-btn { padding:0.5rem 0.8rem; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.06); }

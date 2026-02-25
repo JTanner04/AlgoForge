@@ -1,5 +1,5 @@
 /* Import base styles */
-@import '../BasicTraversal/styles.css';
+@import '../../shared-level-styles.css';
 
 /* Two Pointer Specific Styles */
 .problem-card {

@@ -1,5 +1,5 @@
 /* Binary Search Level Styles */
-@import "../BasicTraversal/styles.css";
+@import "../../shared-level-styles.css";
 
 /* Target Display */
 .target-display {
