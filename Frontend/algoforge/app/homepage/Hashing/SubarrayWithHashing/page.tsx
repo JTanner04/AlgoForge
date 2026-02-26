@@ -82,13 +82,33 @@ export default function SubarrayWithHashing() {
             </section>
 
             <section className="problem-card">
-                <h3>Array & Target</h3>
-                <div className="array-row">
+                <h3>🔢 Array Visualization</h3>
+                <div className="array-container-hashing">
                     {arr.map((v, idx) => (
-                        <div key={idx} className={`array-cell ${foundRange && idx >= foundRange[0] && idx <= foundRange[1] ? 'match' : ''}`}>
-                            {v}
+                        <div key={idx} className="array-item-wrapper-hashing">
+                            <div 
+                                className={`array-bar-hashing ${idx === i ? 'current' : foundRange && idx >= foundRange[0] && idx <= foundRange[1] ? 'match' : ''}`}
+                                style={{ height: `${Math.max(32, v * 7)}px` }}
+                            >
+                                <span className="bar-value-hashing">{v}</span>
+                            </div>
+                            <span className="array-index-hashing">i={idx}</span>
                         </div>
                     ))}
+                </div>
+                <div className="stat-row">
+                    <div className="stat-card">
+                        <div className="label">Current Index</div>
+                        <div className="value">{i >= arr.length ? '—' : i}</div>
+                    </div>
+                    <div className="stat-card">
+                        <div className="label">Current Value</div>
+                        <div className="value">{i >= arr.length ? '—' : arr[i]}</div>
+                    </div>
+                    <div className="stat-card highlight">
+                        <div className="label">Running Sum</div>
+                        <div className="value">{prefix}</div>
+                    </div>
                 </div>
                 <p className="hint">Target = {target}. Step to build running prefix-sum and hash map of sums.</p>
             </section>
