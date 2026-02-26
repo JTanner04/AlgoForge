@@ -1,0 +1,31 @@
+@import "../../shared-level-styles.css";
+
+.call-stack-vis {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    min-height: 180px;
+    margin: 2rem 0 1.2rem 0;
+}
+.stack-frame {
+    background: linear-gradient(90deg, #6366f1 60%, #06b6d4 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 18px rgba(99,102,241,0.13);
+    padding: 0.7rem 2.2rem;
+    margin: 0.3rem 0;
+    transition: box-shadow 0.18s, transform 0.18s;
+}
+.stack-frame.top {
+    box-shadow: 0 0 0 3px #06b6d4, 0 8px 32px rgba(6,182,212,0.18);
+    transform: scale(1.06);
+    z-index: 2;
+}
+.stack-empty {
+    color: #a5b4fc;
+    font-size: 1.1rem;
+    opacity: 0.7;
+    margin: 1.5rem 0;
+}

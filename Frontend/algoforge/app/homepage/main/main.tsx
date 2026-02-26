@@ -48,6 +48,8 @@ export default function HomePage() {
                 router.push('/homepage/Arrays&Strings/BasicTraversal');
             } else if (level.id === 2) {
                 router.push('/homepage/Hashing/FrequencyCounting');
+            } else if (level.id === 3) {
+                router.push('/homepage/Recursion&Backtracking/RecursionBasics');
             } else {
                 router.push(`/level/${level.id}`);
             }
