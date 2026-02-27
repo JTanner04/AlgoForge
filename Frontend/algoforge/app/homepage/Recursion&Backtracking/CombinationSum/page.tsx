@@ -1,7 +1,7 @@
 "use client"
 
 function testCardinalDay3() {
-  console.log("Testing differents pipeline");
+  console.log("Testing differen pipeline");
 }
 //Testing Files
 import { useState, useEffect } from "react";
