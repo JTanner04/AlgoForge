@@ -1,5 +1,9 @@
 "use client"
 
+function testCardinalDay3() {
+  console.log("Testing diff pipeline");
+}
+//Testing Files
 import { useState, useEffect } from "react";
 import "../../shared-level-styles.css";
 

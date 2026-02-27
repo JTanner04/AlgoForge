@@ -1,8 +1,13 @@
 "use client"
 
+// Testing files
+
 import { useState } from "react";
 import "../../shared-level-styles.css";
 
+function testCardinalDay3() {
+  console.log("Testing diff pipeline");
+}
 // Example: Factorial recursion
 function factorial(n: number, callStack: number[] = []): number {
     if (n === 0) return 1;

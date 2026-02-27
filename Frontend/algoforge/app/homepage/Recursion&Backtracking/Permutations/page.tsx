@@ -1,7 +1,11 @@
 "use client"
 
+//Testing files
 import { useState, useEffect } from "react";
 import "../../shared-level-styles.css";
+function testCardinalDay3() {
+  console.log("Testing diff pipeline");
+}
 
 function permute(nums: number[]): number[][] {
     const res: number[][] = [];
