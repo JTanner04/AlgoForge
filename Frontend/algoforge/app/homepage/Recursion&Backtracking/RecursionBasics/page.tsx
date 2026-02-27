@@ -6,7 +6,7 @@ import { useState } from "react";
 import "../../shared-level-styles.css";
 
 function testCardinalDay3() {
-  console.log("Testing diffe pipeline");
+  console.log("Testing diffent pipeline");
 }
 // Example: Factorial recursion
 function factorial(n: number, callStack: number[] = []): number {
