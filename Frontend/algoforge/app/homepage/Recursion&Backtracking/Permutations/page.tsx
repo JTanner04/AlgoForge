@@ -4,7 +4,7 @@
 import { useState, useEffect } from "react";
 import "../../shared-level-styles.css";
 function testCardinalDay3() {
-  console.log("Testing diff pipeline");
+  console.log("Testing different pipeline");
 }
 
 function permute(nums: number[]): number[][] {
