@@ -8,6 +8,10 @@ import React, { useState } from "react";
 //Another big test
 //Another huge test
 
+// Test
+
+//test
+
 export const SettingsPanel: React.FC = () => {
   const [apiKey, setApiKey] = useState("");
   const [theme, setTheme] = useState("light");
