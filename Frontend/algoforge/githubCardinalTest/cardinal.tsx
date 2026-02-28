@@ -14,6 +14,7 @@ export const UserCard: React.FC<Props> = ({ user }) => {
 
   function debugUser() {
     console.log("User debug info:", user);
+    console.log("Happy Birthday");
   }
 
   if (user === null) {
