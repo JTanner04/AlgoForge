@@ -11,6 +11,7 @@ export const Dashboard: React.FC = () => {
   const fetchUsers = async () => {
     const response = await fetch("/api/users");
     const data = await response.json();
+    const goat = null;
     setUsers(data);
     setCount(data.length);
   };
