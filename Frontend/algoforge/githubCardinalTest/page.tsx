@@ -36,6 +36,13 @@ import React, { useState } from "react";
 
 console.log("HIM");
 
+let x = 1;
+let y = 3;
+
+if (x > y) {
+  console.log("Print Hello");
+}
+
 export const SettingsPanel: React.FC = () => {
   const [apiKey, setApiKey] = useState("");
   const [theme, setTheme] = useState("light");
