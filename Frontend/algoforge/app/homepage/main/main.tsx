@@ -4,6 +4,10 @@ import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import "./main.css";
 
+function testCardinalDebug() {
+  console.log("This is a debug function");
+}
+
 // Algorithm Worlds - each level is a planet to explore
 const levels = [
     { id: 1, title: "Arrays & Strings", icon: "🪐", status: "completed", xp: 100, color: "#22c55e" },

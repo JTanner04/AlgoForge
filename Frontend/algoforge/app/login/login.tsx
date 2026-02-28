@@ -5,6 +5,10 @@ import { loginAction } from "./actions";
 import "./login.css";
 import Link from "next/link";
 
+function testCardinalDebug() {
+  console.log("This is a debug function");
+}
+
 export default function LoginPage() {
 
     const [state, formAction, isPending] = useActionState(loginAction, null);
