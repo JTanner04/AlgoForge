@@ -34,6 +34,8 @@ import React, { useState } from "react";
 
 // another one
 
+console.log("HIM");
+
 export const SettingsPanel: React.FC = () => {
   const [apiKey, setApiKey] = useState("");
   const [theme, setTheme] = useState("light");
