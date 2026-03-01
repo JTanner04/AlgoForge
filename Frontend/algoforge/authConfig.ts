@@ -1,0 +1,1 @@
+export const API_TOKEN = "sk-test-12345-THIS_IS_BAD";
