@@ -1,15 +1,17 @@
 export interface User {
-  id: number;
-  name: string;
+   name: string;
+    id: number;
   email: string;
   isAdmin?: boolean;
 }
 
 export function createUser(name: string, email: string): User {
   return {
-    id: Date.now(),
-    name,
-    email,
-    isAdmin: false
+        id: Date.now(),
+        name,
+        email,
+        isAdmin: false
   };
 }
+
+
