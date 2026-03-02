@@ -1,33 +1,32 @@
 @import "../../shared-level-styles.css";
 
 .hash-map {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 0.8rem;
     flex-wrap: wrap;
-    margin: 1rem 0 1.5rem 0;
-    align-items: center;
+    margin: 1rem 0;
 }
 
 .kv-card {
-    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 0.6rem 0.9rem;
+    background: linear-gradient(140deg, rgba(37, 99, 235, 0.18), rgba(6, 182, 212, 0.12));
+    border: 1px solid rgba(125, 211, 252, 0.25);
+    padding: 0.75rem;
     border-radius: 12px;
     display: flex;
-    gap: 0.8rem;
+    justify-content: space-between;
     align-items: center;
-    min-width: 72px;
-    box-shadow: 0 6px 18px rgba(2,6,23,0.6);
+    box-shadow: 0 8px 20px rgba(3, 10, 26, 0.45);
 }
 
 .kv-key {
     font-weight: 800;
-    color: #fbbf24;
-    font-size: 0.95rem;
+    color: #fcd34d;
+    font-size: 1rem;
 }
 
 .kv-val {
-    background: rgba(255,255,255,0.04);
+    background: rgba(15, 23, 42, 0.6);
     padding: 0.25rem 0.6rem;
     border-radius: 999px;
     font-weight: 700;
@@ -39,31 +38,34 @@
 .kv-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    margin-top: 0.8rem;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 1px solid rgba(148, 163, 184, 0.25);
 }
 
 .kv-table th, .kv-table td {
-    padding: 1rem 0.8rem;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 0.72rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.kv-table th { text-align: center; color: rgba(255,255,255,0.85); }
+.kv-table th {
+    text-align: center;
+    color: #d9e8ff;
+    background: rgba(37, 99, 235, 0.16);
+}
 
-.kv-table td { text-align: center; color: rgba(255,255,255,0.6); }
+.kv-table td {
+    text-align: center;
+    color: rgba(226, 232, 240, 0.9);
+    background: rgba(15, 23, 42, 0.5);
+}
 
 .empty {
-    color: rgba(255,255,255,0.45);
+    color: rgba(203, 213, 225, 0.75);
     font-style: italic;
 }
 
 .input-text {
-    width: 100%;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.06);
-    padding: 0.8rem;
-    border-radius: 12px;
-    color: white;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, 'Fira Code', monospace;
+    font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace;
 }
-
-.next-level { display:flex; justify-content:center; margin-top: 2rem; }

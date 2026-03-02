@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import "../../shared-level-styles.css";
+import "./styles.css";
 
 function permute(nums: number[]): number[][] {
     const res: number[][] = [];

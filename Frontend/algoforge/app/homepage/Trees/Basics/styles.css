@@ -1,0 +1,62 @@
+@import "../../shared-level-styles.css";
+
+.tree-layout {
+    margin-top: 0.8rem;
+    display: grid;
+    gap: 0.7rem;
+}
+
+.tree-row {
+    display: flex;
+    justify-content: center;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.tree-value {
+    min-width: 54px;
+    text-align: center;
+    padding: 0.65rem;
+    border-radius: 999px;
+    font-weight: 800;
+    color: #e2e8f0;
+    background: rgba(30, 41, 59, 0.72);
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tree-value.visited {
+    background: linear-gradient(120deg, #16a34a, #0ea5e9);
+    border-color: rgba(110, 231, 183, 0.7);
+    transform: translateY(-1px);
+    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.24);
+}
+
+.visit-strip {
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.visit-strip .label {
+    color: #93c5fd;
+    font-size: 0.88rem;
+    margin-right: 0.2rem;
+}
+
+.visit-chip {
+    background: rgba(30, 64, 175, 0.5);
+    border: 1px solid rgba(147, 197, 253, 0.4);
+    color: #dbeafe;
+    border-radius: 999px;
+    padding: 0.24rem 0.56rem;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.empty {
+    color: #cbd5e1;
+    font-style: italic;
+}

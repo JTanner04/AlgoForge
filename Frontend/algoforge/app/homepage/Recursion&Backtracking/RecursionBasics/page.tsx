@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react";
-import "../../shared-level-styles.css";
+import "./styles.css";
 
 // Example: Factorial recursion
 function factorial(n: number, callStack: number[] = []): number {

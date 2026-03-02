@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react";
-import "../../shared-level-styles.css";
+import "./styles.css";
 
 // Helper to generate all subsets (power set)
 function generateSubsets(arr: number[]): number[][] {

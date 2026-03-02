@@ -1,15 +1,63 @@
 @import "../../shared-level-styles.css";
 
-.array-row { display:flex; gap:0.6rem; margin:1rem 0; }
-.array-cell { padding:0.6rem 0.8rem; background:rgba(255,255,255,0.04); border-radius:8px; min-width:48px; text-align:center; }
-.array-cell.visited { background:linear-gradient(90deg,#6366f1,#a855f7); color:white; }
-.array-cell.match { box-shadow:0 0 20px rgba(16,185,129,0.4); transform:scale(1.05); }
+.array-row {
+    display: flex;
+    gap: 0.6rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+}
 
-.hash-map { display:flex; gap:0.6rem; flex-wrap:wrap; margin:1rem 0; }
-.kv-card { background:rgba(255,255,255,0.05); padding:0.5rem 0.8rem; border-radius:8px; }
-.kv-card.highlight { border:2px solid #f59e0b; }
+.array-cell {
+    min-width: 52px;
+    padding: 0.7rem 0.85rem;
+    border-radius: 11px;
+    text-align: center;
+    font-weight: 700;
+    background: rgba(30, 41, 59, 0.72);
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
 
-.success-message { margin-top:1rem; color:#10b981; font-weight:700; }
+.array-cell.visited {
+    color: #f8fbff;
+    background: linear-gradient(120deg, #2563eb, #06b6d4);
+    border-color: rgba(125, 211, 252, 0.55);
+}
 
-.controls { margin-top:1rem; display:flex; gap:0.6rem; }
-.control-btn { padding:0.5rem 0.8rem; border-radius:8px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.06); }
+.array-cell.match {
+    box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.55), 0 0 26px rgba(22, 163, 74, 0.34);
+    transform: translateY(-1px);
+}
+
+.hash-map {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+}
+
+.kv-card {
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    padding: 0.6rem 0.82rem;
+    border-radius: 11px;
+}
+
+.kv-card.highlight {
+    border-color: rgba(251, 191, 36, 0.8);
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.32);
+}
+
+.kv-key {
+    font-weight: 700;
+}
+
+.kv-val {
+    color: #bdd7ff;
+    margin-top: 0.2rem;
+    font-size: 0.9rem;
+}
+
+.controls {
+    margin-top: 0.8rem;
+}
