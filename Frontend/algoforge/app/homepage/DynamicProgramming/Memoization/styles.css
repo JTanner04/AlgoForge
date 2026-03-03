@@ -1,0 +1,168 @@
+@import "../../Heaps&PriorityQueues/Basics/styles.css";
+
+.tree-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.call-chip {
+    border-radius: 999px;
+    padding: 0.3rem 0.62rem;
+    font-weight: 700;
+    border: 1px solid rgba(100, 116, 139, 0.4);
+    background: rgba(15, 23, 42, 0.75);
+    color: #dbeafe;
+}
+
+.call-chip.active {
+    border-color: rgba(125, 211, 252, 0.75);
+    background: rgba(14, 116, 144, 0.34);
+    color: #ecfeff;
+}
+
+.call-chip.hit {
+    border-color: rgba(253, 224, 71, 0.95);
+    background: rgba(234, 179, 8, 0.24);
+    color: #fef9c3;
+}
+
+.memo-panel {
+    margin-top: 0.85rem;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    border-radius: 14px;
+    background: rgba(8, 14, 30, 0.74);
+    padding: 0.8rem;
+}
+
+.memo-grid {
+    margin-top: 0.7rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.memo-item {
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    border-radius: 11px;
+    padding: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    background: rgba(15, 23, 42, 0.72);
+    color: #dbeafe;
+}
+
+.dp-array {
+    margin-top: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.dp-cell {
+    border-radius: 10px;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    padding: 0.44rem 0.58rem;
+    background: rgba(15, 23, 42, 0.75);
+    color: #dbeafe;
+    font-weight: 700;
+}
+
+.dp-cell.active {
+    border-color: rgba(125, 211, 252, 0.75);
+    background: rgba(14, 116, 144, 0.35);
+}
+
+.dp-cell.done {
+    border-color: rgba(110, 231, 183, 0.72);
+    background: rgba(16, 185, 129, 0.19);
+}
+
+.transition-panel {
+    margin-top: 0.8rem;
+    border-radius: 12px;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    background: rgba(8, 14, 30, 0.74);
+    padding: 0.72rem;
+    color: #dbeafe;
+}
+
+.grid-board {
+    margin-top: 0.8rem;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.5rem;
+}
+
+.grid-cell {
+    border-radius: 12px;
+    min-height: 64px;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    background: rgba(15, 23, 42, 0.75);
+    color: #dbeafe;
+    padding: 0.48rem;
+    font-weight: 700;
+    position: relative;
+}
+
+.grid-cell.active {
+    border-color: rgba(125, 211, 252, 0.75);
+    box-shadow: 0 0 0 2px rgba(14, 116, 144, 0.24);
+}
+
+.grid-cell.done {
+    border-color: rgba(110, 231, 183, 0.72);
+    background: rgba(16, 185, 129, 0.19);
+}
+
+.arrow-label {
+    display: block;
+    margin-top: 0.35rem;
+    font-size: 0.74rem;
+    color: #93c5fd;
+}
+
+.knapsack-table {
+    margin-top: 0.8rem;
+    overflow-x: auto;
+}
+
+.knapsack-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.knapsack-table th,
+.knapsack-table td {
+    text-align: center;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    padding: 0.45rem;
+    color: #dbeafe;
+}
+
+.knapsack-table th {
+    background: rgba(30, 64, 175, 0.24);
+}
+
+.knapsack-table td.active {
+    border-color: rgba(253, 224, 71, 0.95);
+    background: rgba(234, 179, 8, 0.24);
+    color: #fef9c3;
+}
+
+.knapsack-table td.included {
+    border-color: rgba(110, 231, 183, 0.72);
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.knapsack-table td.excluded {
+    border-color: rgba(248, 113, 113, 0.7);
+    background: rgba(239, 68, 68, 0.16);
+}
+
+@media (max-width: 900px) {
+    .memo-grid,
+    .grid-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}

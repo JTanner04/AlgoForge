@@ -13,8 +13,8 @@ const levels = [
     { id: 5, title: "Stacks & Queues", icon: "🟠", status: "completed", xp: 140, color: "#f97316" },
     { id: 6, title: "Trees", icon: "💜", status: "completed", xp: 180, color: "#a855f7" },
     { id: 7, title: "Heaps & Priority Queues", icon: "🌊", status: "current", xp: 160, color: "#06b6d4" },
-    { id: 8, title: "Graphs", icon: "⭐", status: "locked", xp: 200, color: "#fbbf24" },
-    { id: 9, title: "Dynamic Programming", icon: "🪨", status: "locked", xp: 250, color: "#78716c" },
+    { id: 8, title: "Graphs", icon: "⭐", status: "current", xp: 200, color: "#fbbf24" },
+    { id: 9, title: "Dynamic Programming", icon: "🪨", status: "current", xp: 250, color: "#78716c" },
 ];
 
 // Generate random stars for the hyperspace effect
@@ -60,6 +60,8 @@ export default function HomePage() {
                 router.push('/homepage/Heaps&PriorityQueues/Basics');
             } else if (level.id === 8) {
                 router.push('/homepage/Graphs/Representation');
+            } else if (level.id === 9) {
+                router.push('/homepage/DynamicProgramming/Memoization');
             } else {
                 router.push(`/level/${level.id}`);
             }
