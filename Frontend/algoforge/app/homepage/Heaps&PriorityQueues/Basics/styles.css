@@ -1,0 +1,117 @@
+@import "../../Trees/Basics/styles.css";
+
+.array-strip {
+    margin-top: 0.9rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.array-chip {
+    border-radius: 999px;
+    padding: 0.28rem 0.58rem;
+    border: 1px solid rgba(100, 116, 139, 0.4);
+    background: rgba(15, 23, 42, 0.74);
+    color: #dbeafe;
+    font-size: 0.84rem;
+    font-weight: 700;
+}
+
+.array-chip.active {
+    border-color: rgba(125, 211, 252, 0.75);
+    background: rgba(14, 116, 144, 0.35);
+    color: #ecfeff;
+}
+
+.tree-value.ghost {
+    opacity: 0.42;
+}
+
+.stage-grid {
+    margin-top: 0.85rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.6rem;
+}
+
+.stage-card {
+    border-radius: 12px;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    background: rgba(8, 14, 30, 0.78);
+    padding: 0.72rem;
+}
+
+.stage-card.active {
+    border-color: rgba(253, 224, 71, 0.9);
+    box-shadow: 0 0 0 2px rgba(250, 204, 21, 0.24);
+}
+
+.stage-card h4 {
+    margin: 0;
+    color: #c7dcff;
+    font-size: 0.85rem;
+}
+
+.stage-card p {
+    margin: 0.42rem 0 0;
+    color: #dbeafe;
+    font-weight: 700;
+}
+
+.queue-visual {
+    margin-top: 0.85rem;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    border-radius: 14px;
+    background: rgba(8, 14, 30, 0.74);
+    padding: 0.8rem;
+}
+
+.queue-title {
+    margin: 0 0 0.55rem;
+    color: #c7dcff;
+    font-weight: 700;
+}
+
+.queue-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.queue-chip {
+    border-radius: 999px;
+    padding: 0.28rem 0.58rem;
+    border: 1px solid rgba(94, 234, 212, 0.45);
+    background: rgba(13, 148, 136, 0.24);
+    color: #ccfbf1;
+    font-weight: 700;
+}
+
+.task-row {
+    margin-top: 0.8rem;
+    display: grid;
+    gap: 0.52rem;
+}
+
+.task-item {
+    border-radius: 10px;
+    border: 1px solid rgba(100, 116, 139, 0.35);
+    padding: 0.6rem 0.72rem;
+    background: rgba(15, 23, 42, 0.72);
+    color: #dbeafe;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.6rem;
+    font-weight: 700;
+}
+
+.task-item.done {
+    border-color: rgba(110, 231, 183, 0.62);
+    background: rgba(16, 185, 129, 0.17);
+}
+
+@media (max-width: 900px) {
+    .stage-grid {
+        grid-template-columns: 1fr;
+    }
+}
