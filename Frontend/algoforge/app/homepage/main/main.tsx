@@ -25,6 +25,7 @@ const generateStars = (count: number) => {
         x: Math.random() * 100,
         y: Math.random() * 100,
         size: Math.random() * 2 + 1,
+        delay: Math.random() * 0.3,
     }));
 };
 
@@ -38,7 +39,8 @@ export default function HomePage() {
 
     const handleTravelToWorld = useCallback((level: typeof levels[0]) => {
         if (level.status === "locked") return;
-        
+
+        setSelectedLevel(level.id);
         setTargetWorld(level);
         setIsHyperspace(true);
 
@@ -90,7 +92,7 @@ export default function HomePage() {
                                     left: `${star.x}%`,
                                     top: `${star.y}%`,
                                     width: `${star.size}px`,
-                                    animationDelay: `${Math.random() * 0.3}s`,
+                                    animationDelay: `${star.delay}s`,
                                 }}
                             />
                         ))}
@@ -330,7 +332,7 @@ export default function HomePage() {
 
                 <div className="daily-challenge">
                     <h3>🎯 Daily Challenge</h3>
-                    <p>Solve today's algorithm puzzle</p>
+                    <p>Solve today&apos;s algorithm puzzle</p>
                     <button className="challenge-button">Start Challenge</button>
                 </div>
             </aside>
