@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import "./main.css";
 
 // Algorithm Worlds - each level is a planet to explore
@@ -112,18 +113,18 @@ export default function HomePage() {
                 </div>
                 
                 <nav className="sidebar-nav">
-                    <a href="#" className="nav-item active">
+                    <Link href="/homepage" className="nav-item active">
                         <span className="nav-icon">🏠</span>
                         <span>Learn</span>
-                    </a>
+                    </Link>
                     <a href="#" className="nav-item">
                         <span className="nav-icon">🏆</span>
                         <span>Leaderboard</span>
                     </a>
-                    <a href="#" className="nav-item">
+                    <Link href="/profile" className="nav-item">
                         <span className="nav-icon">👤</span>
                         <span>Profile</span>
-                    </a>
+                    </Link>
                     <a href="#" className="nav-item">
                         <span className="nav-icon">⚙️</span>
                         <span>Settings</span>
