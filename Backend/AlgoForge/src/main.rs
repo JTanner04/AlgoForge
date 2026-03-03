@@ -39,6 +39,7 @@ async fn main() {
         .route("/", get(|| async { "AlgoForge API is running!" }))
         .route("/api/signup", post(handlers::signup))
         .route("/api/login", post(handlers::login))
+        .route("/api/profile", get(handlers::profile))
         .layer(cors)
         .with_state(state);
 

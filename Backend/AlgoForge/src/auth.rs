@@ -36,6 +36,11 @@ pub struct AuthResponse {
     pub user: UserResponse,
 }
 
+#[derive(Debug, Serialize)]
+pub struct ProfileResponse {
+    pub user: UserResponse,
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
     pub sub: String,

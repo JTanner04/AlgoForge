@@ -1,10 +1,15 @@
-use axum::{extract::State, Json};
+use axum::{
+    extract::State,
+    http::{header, HeaderMap},
+    Json,
+};
 use sqlx::PgPool;
 use uuid::Uuid;
 
 use crate::auth::{
     hash_password, verify_password, create_token,
-    AuthError, AuthResponse, LoginRequest, SignupRequest, User, UserResponse,
+    verify_token, AuthError, AuthResponse, LoginRequest, ProfileResponse, SignupRequest, User,
+    UserResponse,
 };
 
 #[derive(Clone)]
@@ -82,6 +87,40 @@ pub async fn login(
     // Return response
     Ok(Json(AuthResponse {
         token,
+        user: UserResponse {
+            id: user.id,
+            username: user.username,
+            email: user.email,
+        },
+    }))
+}
+
+pub async fn profile(
+    State(state): State<AppState>,
+    headers: HeaderMap,
+) -> Result<Json<ProfileResponse>, AuthError> {
+    let auth_header = headers
+        .get(header::AUTHORIZATION)
+        .and_then(|value| value.to_str().ok())
+        .ok_or(AuthError::InvalidToken)?;
+
+    let token = auth_header
+        .strip_prefix("Bearer ")
+        .ok_or(AuthError::InvalidToken)?;
+
+    let claims = verify_token(token, &state.jwt_secret)?;
+    let user_id = Uuid::parse_str(&claims.sub).map_err(|_| AuthError::InvalidToken)?;
+
+    let user = sqlx::query_as::<_, User>(
+        "SELECT id, username, email, password_hash FROM users WHERE id = $1",
+    )
+    .bind(user_id)
+    .fetch_optional(&state.db)
+    .await
+    .map_err(|_| AuthError::InternalError)?
+    .ok_or(AuthError::InvalidToken)?;
+
+    Ok(Json(ProfileResponse {
         user: UserResponse {
             id: user.id,
             username: user.username,
