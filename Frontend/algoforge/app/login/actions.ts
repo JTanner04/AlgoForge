@@ -7,6 +7,10 @@ export async function loginAction(prevState: any, formData: FormData) {
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
+    if (!username?.trim() || !password) {
+        return { error: "Username and password are required" };
+    }
+
     try {
         const response = await fetch("http://localhost:3001/api/login", {
             method: "POST",
