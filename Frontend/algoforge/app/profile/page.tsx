@@ -100,7 +100,7 @@ export default async function ProfilePage() {
                 <header className="profile-header">
                     <p className="eyebrow">Pilot Console</p>
                     <h1>{profile.user.username}</h1>
-                    <p>System diagnostics and training telemetry</p>
+                    <p>System diagnostics, progress insights, and active missions</p>
                 </header>
 
                 <section className="profile-card">
