@@ -17,7 +17,7 @@ async fn main() {
     let database_url = std::env::var("DATABASE_URL")
         .expect("DATABASE_URL must be set");
     let jwt_secret = std::env::var("JWT_SECRET")
-        .expect("JWT_SECRET must be set");
+        .unwrap_or_else(|_| "hardcoded_dev_secret_do_not_use".to_string());
 
     let pool = PgPoolOptions::new()
         .max_connections(5)
