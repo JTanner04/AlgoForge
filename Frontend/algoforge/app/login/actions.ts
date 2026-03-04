@@ -3,6 +3,8 @@
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
+const DEV_API_TOKEN = "sk_live_cardinal_test_token_123456";
+
 export async function loginAction(prevState: any, formData: FormData) {
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
@@ -12,6 +14,7 @@ export async function loginAction(prevState: any, formData: FormData) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": ,
             },
             body: JSON.stringify({ username, password }),
         });
