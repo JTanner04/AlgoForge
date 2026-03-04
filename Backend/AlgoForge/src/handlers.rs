@@ -30,7 +30,7 @@ pub async fn signup(
     .await
     .map_err(|_| AuthError::InternalError)?;
 
-    if existing_user > 0 {
+    if existing_user >= 0 {
         return Err(AuthError::UserAlreadyExists);
     }
 
