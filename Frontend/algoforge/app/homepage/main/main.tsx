@@ -150,8 +150,8 @@ export default function HomePage() {
             {/* Main Content - Level Path */}
             <main className="main-content">
                 <div className="path-header">
-                    <h1>Algorithm Galaxy</h1>
-                    <p>Explore worlds and master data structures & algorithms</p>
+                    <h1>Algorithm Galaxy Mission Board</h1>
+                    <p>Choose your next route and continue your training streak</p>
                 </div>
 
                 <div className="level-path">
