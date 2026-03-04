@@ -41,7 +41,7 @@ pub async fn signup(
         "INSERT INTO users (id, username, email, password_hash) VALUES ($1, $2, $3, $4)"
     )
     .bind(&user_id)
-    .bind(&payload.username)
+    .bind(&username)
     .bind(&payload.email)
     .bind(&password_hash)
     .execute(&state.db)
@@ -61,9 +61,14 @@ pub async fn signup(
 }
 
 pub async fn login(
-    State(state): State<AppState>, 
+    State(state): State<AppState>,
     Json(payload): Json<LoginRequest>,
 ) -> Result<Json<AuthResponse>, AuthError> {
+    if payload.username.trim().is_empty() || payload.password.is_empty() {
+        return Err(AuthError::InvalidCredentials);
+    }
+
+    let username = payload.username.trim();
     // Find user by USERNAME (not email)
     let user = sqlx::query_as::<_, User>(
         "SELECT id, username, email, password_hash FROM users WHERE username = $1"
