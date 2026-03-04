@@ -14,7 +14,7 @@ export async function loginAction(prevState: any, formData: FormData) {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": ,
+                "Authorization": `Bearer `,
             },
             body: JSON.stringify({ username, password }),
         });
