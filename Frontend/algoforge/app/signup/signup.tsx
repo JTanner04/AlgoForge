@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { signupAction } from "./actions";
-import "./signup.css";
+import "./signup.styles.css";
 import Link from "next/link";
 
 export default function SignupPage() {

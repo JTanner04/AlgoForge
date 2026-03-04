@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { loginAction } from "./actions";
-import "./login.css";
+import "./login.styles.css";
 import Link from "next/link";
 
 export default function LoginPage() {
