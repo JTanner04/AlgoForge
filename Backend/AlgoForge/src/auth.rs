@@ -127,3 +127,7 @@ pub fn verify_token(token: &str, secret: &str) -> Result<Claims, AuthError> {
     .map(|data| data.claims)
     .map_err(|_| AuthError::InvalidToken)
 }
+
+// Reviewer test note:
+// Tiny PR variant B
+// This change is intentionally comment-only.
