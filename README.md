@@ -134,3 +134,8 @@ Initial focus:
 Jeremiah Tanner
 
 ---
+
+## Reviewer Test Note
+- Tiny PR variant A
+- Scope: single file, 5 lines
+- Intent: low-risk copy change
