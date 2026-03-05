@@ -18,6 +18,20 @@ const levels = [
     { id: 9, title: "Dynamic Programming", icon: "🪨", status: "current", xp: 250, color: "#78716c" },
 ];
 
+const atmosphereStars = [
+    { x: "8%", y: "6%", size: "5px", delay: "0.2s" },
+    { x: "24%", y: "18%", size: "3px", delay: "1.1s" },
+    { x: "83%", y: "12%", size: "4px", delay: "0.8s" },
+    { x: "69%", y: "28%", size: "6px", delay: "1.5s" },
+    { x: "15%", y: "40%", size: "3px", delay: "0.4s" },
+    { x: "86%", y: "46%", size: "4px", delay: "1.7s" },
+    { x: "30%", y: "58%", size: "5px", delay: "0.9s" },
+    { x: "74%", y: "69%", size: "3px", delay: "0.5s" },
+    { x: "11%", y: "76%", size: "4px", delay: "1.3s" },
+    { x: "55%", y: "86%", size: "6px", delay: "1.9s" },
+    { x: "88%", y: "90%", size: "4px", delay: "0.7s" },
+];
+
 // Generate random stars for the hyperspace effect
 const generateStars = (count: number) => {
     return Array.from({ length: count }, (_, i) => ({
@@ -155,83 +169,28 @@ export default function HomePage() {
                 </div>
 
                 <div className="level-path">
-                    {/* SVG Path connecting nodes - smooth curved line */}
-                    <svg className="path-line" viewBox="0 0 300 1250" preserveAspectRatio="none">
-                        {/* Glow filter for the path */}
-                        <defs>
-                            <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-                                <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
-                                <feMerge>
-                                    <feMergeNode in="coloredBlur"/>
-                                    <feMergeNode in="SourceGraphic"/>
-                                </feMerge>
-                            </filter>
-                            <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stopColor="#22c55e" />
-                                <stop offset="100%" stopColor="#6366f1" />
-                            </linearGradient>
-                            <linearGradient id="lockedGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" stopColor="rgba(99, 102, 241, 0.3)" />
-                                <stop offset="100%" stopColor="rgba(99, 102, 241, 0.15)" />
-                            </linearGradient>
-                        </defs>
-                        
-                        {/* Background path (locked portion) */}
-                        <path
-                            d={(() => {
-                                let path = "";
-                                const nodeSpacing = 138; // Match CSS gap
-                                levels.forEach((_, i) => {
-                                    const x = 150 + getNodePosition(i);
-                                    const y = 55 + i * nodeSpacing;
-                                    if (i === 0) {
-                                        path += `M ${x} ${y}`;
-                                    } else {
-                                        const prevX = 150 + getNodePosition(i - 1);
-                                        const prevY = 55 + (i - 1) * nodeSpacing;
-                                        const cpY = (prevY + y) / 2;
-                                        path += ` C ${prevX} ${cpY}, ${x} ${cpY}, ${x} ${y}`;
-                                    }
-                                });
-                                return path;
-                            })()}
-                            fill="none"
-                            stroke="url(#lockedGradient)"
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            filter="url(#glow)"
-                            strokeDasharray="12 8"
-                        />
-                        
-                        {/* Completed/Active path overlay */}
-                        <path
-                            d={(() => {
-                                let path = "";
-                                const nodeSpacing = 138; // Match CSS gap
-                                const activeIndex = levels.findIndex(l => l.status === "current");
-                                levels.slice(0, activeIndex + 1).forEach((_, i) => {
-                                    const x = 150 + getNodePosition(i);
-                                    const y = 55 + i * nodeSpacing;
-                                    if (i === 0) {
-                                        path += `M ${x} ${y}`;
-                                    } else {
-                                        const prevX = 150 + getNodePosition(i - 1);
-                                        const prevY = 55 + (i - 1) * nodeSpacing;
-                                        const cpY = (prevY + y) / 2;
-                                        path += ` C ${prevX} ${cpY}, ${x} ${cpY}, ${x} ${y}`;
-                                    }
-                                });
-                                return path;
-                            })()}
-                            fill="none"
-                            stroke="url(#pathGradient)"
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            filter="url(#glow)"
-                        />
-                    </svg>
+                    <div className="path-atmosphere" aria-hidden="true">
+                        <div className="nebula nebula-left" />
+                        <div className="nebula nebula-right" />
+                        <div className="atmosphere-core" />
+                        <div className="atmosphere-wave wave-a" />
+                        <div className="atmosphere-wave wave-b" />
+                        <div className="atmosphere-dust dust-a" />
+                        <div className="atmosphere-dust dust-b" />
+                        {atmosphereStars.map((star, index) => (
+                            <span
+                                key={`${star.x}-${star.y}-${index}`}
+                                className="atmosphere-star"
+                                style={{
+                                    left: star.x,
+                                    top: star.y,
+                                    width: star.size,
+                                    height: star.size,
+                                    animationDelay: star.delay,
+                                }}
+                            />
+                        ))}
+                    </div>
 
                     {/* Level Nodes - Planets */}
                     <div className="nodes-container">

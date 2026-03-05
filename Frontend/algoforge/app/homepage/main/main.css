@@ -194,16 +194,168 @@
     padding: 1rem 0 2.25rem;
 }
 
-.path-line {
+.path-atmosphere {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 320px;
     height: 100%;
-    pointer-events: none;
     z-index: 0;
-    overflow: visible;
+    pointer-events: none;
+}
+
+.nebula {
+    position: absolute;
+    width: 240px;
+    height: 240px;
+    border-radius: 50%;
+    filter: blur(24px);
+    opacity: 0.4;
+}
+
+.nebula-left {
+    top: 16%;
+    left: -46px;
+    background: radial-gradient(circle at 45% 45%, rgba(87, 155, 255, 0.55), rgba(48, 69, 178, 0.2) 58%, transparent 82%);
+}
+
+.nebula-right {
+    bottom: 10%;
+    right: -50px;
+    background: radial-gradient(circle at 55% 55%, rgba(52, 212, 182, 0.5), rgba(30, 109, 141, 0.2) 56%, transparent 80%);
+}
+
+.atmosphere-core {
+    position: absolute;
+    top: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 94%;
+    border-radius: 999px;
+    background: linear-gradient(
+        180deg,
+        rgba(107, 225, 255, 0.06) 0%,
+        rgba(107, 225, 255, 0.36) 40%,
+        rgba(70, 198, 191, 0.24) 72%,
+        rgba(70, 198, 191, 0.08) 100%
+    );
+    filter: blur(0.4px);
+}
+
+.atmosphere-core::before {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background: linear-gradient(180deg, rgba(129, 216, 255, 0.08), rgba(79, 194, 233, 0.22), rgba(65, 170, 162, 0.08));
+    filter: blur(3px);
+}
+
+.atmosphere-wave {
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    width: 230px;
+    height: 90%;
+    border-radius: 999px;
+    border: 1px solid rgba(131, 201, 255, 0.22);
+    filter: blur(0.2px);
+    opacity: 0.5;
+}
+
+.wave-a {
+    transform: translateX(-50%) rotate(-10deg);
+    animation: wave-drift-a 7s ease-in-out infinite;
+}
+
+.wave-b {
+    transform: translateX(-50%) rotate(10deg);
+    animation: wave-drift-b 8.2s ease-in-out infinite;
+}
+
+.atmosphere-dust {
+    position: absolute;
+    width: 76%;
+    height: 74%;
+    left: 12%;
+    border-radius: 50%;
+    border: 1px dashed rgba(165, 215, 255, 0.2);
+}
+
+.dust-a {
+    top: 9%;
+    transform: rotate(-22deg);
+    animation: dust-orbit-a 14s linear infinite;
+}
+
+.dust-b {
+    bottom: 8%;
+    transform: rotate(18deg);
+    animation: dust-orbit-b 17s linear infinite;
+}
+
+.atmosphere-star {
+    position: absolute;
+    border-radius: 999px;
+    background: radial-gradient(circle at 40% 40%, #ffffff, #98dcff 62%, rgba(152, 220, 255, 0.18) 100%);
+    box-shadow: 0 0 10px rgba(152, 220, 255, 0.55);
+    animation: star-twinkle 2.6s ease-in-out infinite;
+}
+
+@keyframes wave-drift-a {
+    0%,
+    100% {
+        transform: translateX(-50%) rotate(-10deg) scaleY(1);
+        opacity: 0.34;
+    }
+    50% {
+        transform: translateX(-50%) rotate(-6deg) scaleY(1.04);
+        opacity: 0.58;
+    }
+}
+
+@keyframes wave-drift-b {
+    0%,
+    100% {
+        transform: translateX(-50%) rotate(10deg) scaleY(1);
+        opacity: 0.28;
+    }
+    50% {
+        transform: translateX(-50%) rotate(6deg) scaleY(1.05);
+        opacity: 0.54;
+    }
+}
+
+@keyframes dust-orbit-a {
+    from {
+        transform: rotate(-22deg);
+    }
+    to {
+        transform: rotate(338deg);
+    }
+}
+
+@keyframes dust-orbit-b {
+    from {
+        transform: rotate(18deg);
+    }
+    to {
+        transform: rotate(378deg);
+    }
+}
+
+@keyframes star-twinkle {
+    0%,
+    100% {
+        opacity: 0.45;
+        transform: scale(0.9);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
 }
 
 .nodes-container {
