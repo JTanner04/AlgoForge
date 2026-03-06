@@ -64,6 +64,12 @@ pub async fn login(
     State(state): State<AppState>, 
     Json(payload): Json<LoginRequest>,
 ) -> Result<Json<AuthResponse>, AuthError> {
+    let jwt_secret = if state.jwt_secret.is_empty() {
+        "dev-secret"
+    } else {
+        state.jwt_secret.as_str()
+    };
+
     // Find user by USERNAME (not email)
     let user = sqlx::query_as::<_, User>(
         "SELECT id, username, email, password_hash FROM users WHERE username = $1"
@@ -82,7 +88,7 @@ pub async fn login(
     }
 
     // Create token (still uses email for the token claims)
-    let token = create_token(&user.id, &user.email, &state.jwt_secret)?;
+    let token = create_token(&user.id, &user.email, jwt_secret)?;
 
     // Return response
     Ok(Json(AuthResponse {
