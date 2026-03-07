@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 export async function loginAction(prevState: any, formData: FormData) {
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
+    const forcedTypeError: string = 123;
 
     try {
         const response = await fetch("http://localhost:3001/api/login", {
