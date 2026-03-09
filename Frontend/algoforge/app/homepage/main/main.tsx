@@ -1,22 +1,10 @@
 "use client"
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, type CSSProperties } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import "./main.css";
-
-// Algorithm Worlds - each level is a planet to explore
-const levels = [
-    { id: 1, title: "Arrays & Strings", icon: "🪐", status: "completed", xp: 100, color: "#22c55e" },
-    { id: 2, title: "Hashing (Maps & Sets)", icon: "🌍", status: "completed", xp: 120, color: "#3b82f6" },
-    { id: 3, title: "Recursion & Backtracking", icon: "🌙", status: "completed", xp: 150, color: "#94a3b8" },
-    { id: 4, title: "Linked Lists", icon: "🔴", status: "completed", xp: 130, color: "#ef4444" },
-    { id: 5, title: "Stacks & Queues", icon: "🟠", status: "completed", xp: 140, color: "#f97316" },
-    { id: 6, title: "Trees", icon: "💜", status: "completed", xp: 180, color: "#a855f7" },
-    { id: 7, title: "Heaps & Priority Queues", icon: "🌊", status: "current", xp: 160, color: "#06b6d4" },
-    { id: 8, title: "Graphs", icon: "⭐", status: "current", xp: 200, color: "#fbbf24" },
-    { id: 9, title: "Dynamic Programming", icon: "🪨", status: "current", xp: 250, color: "#78716c" },
-];
+import { getDailyChallenge, getWorldById, getWorldProgress, worlds } from "../curriculum-data";
 
 const atmosphereStars = [
     { x: "8%", y: "6%", size: "5px", delay: "0.2s" },
@@ -49,9 +37,11 @@ export default function HomePage() {
     const router = useRouter();
     const [selectedLevel, setSelectedLevel] = useState<number | null>(null);
     const [isHyperspace, setIsHyperspace] = useState(false);
-    const [targetWorld, setTargetWorld] = useState<typeof levels[0] | null>(null);
+    const [targetWorld, setTargetWorld] = useState<(typeof worlds)[number] | null>(null);
+    const selectedWorld = selectedLevel ? getWorldById(selectedLevel) : null;
+    const dailyChallenge = getDailyChallenge();
 
-    const handleTravelToWorld = useCallback((level: typeof levels[0]) => {
+    const handleTravelToWorld = useCallback((level: (typeof worlds)[number]) => {
         if (level.status === "locked") return;
 
         setSelectedLevel(level.id);
@@ -60,28 +50,7 @@ export default function HomePage() {
 
         // After hyperspace animation, navigate to the level
         setTimeout(() => {
-            // Route to the appropriate world's first level
-            if (level.id === 1) {
-                router.push('/homepage/Arrays&Strings/BasicTraversal');
-            } else if (level.id === 2) {
-                router.push('/homepage/Hashing/FrequencyCounting');
-            } else if (level.id === 3) {
-                router.push('/homepage/Recursion&Backtracking/RecursionBasics');
-            } else if (level.id === 4) {
-                router.push('/homepage/LinkedLists/Basics');
-            } else if (level.id === 5) {
-                router.push('/homepage/Stacks&Queues/Basics');
-            } else if (level.id === 6) {
-                router.push('/homepage/Trees/Basics');
-            } else if (level.id === 7) {
-                router.push('/homepage/Heaps&PriorityQueues/Basics');
-            } else if (level.id === 8) {
-                router.push('/homepage/Graphs/Representation');
-            } else if (level.id === 9) {
-                router.push('/homepage/DynamicProgramming/Memoization');
-            } else {
-                router.push(`/level/${level.id}`);
-            }
+            router.push(level.lessons[0]?.path ?? "/homepage");
         }, 2500);
     }, [router]);
 
@@ -133,18 +102,18 @@ export default function HomePage() {
                         <span className="nav-icon">🏠</span>
                         <span>Learn</span>
                     </Link>
-                    <a href="#" className="nav-item">
-                        <span className="nav-icon">🏆</span>
-                        <span>Leaderboard</span>
-                    </a>
+                    <Link href="/homepage/curriculum" className="nav-item">
+                        <span className="nav-icon">🧭</span>
+                        <span>Curriculum</span>
+                    </Link>
                     <Link href="/profile" className="nav-item">
                         <span className="nav-icon">👤</span>
                         <span>Profile</span>
                     </Link>
-                    <a href="#" className="nav-item">
+                    <button type="button" className="nav-item nav-item-static">
                         <span className="nav-icon">⚙️</span>
                         <span>Settings</span>
-                    </a>
+                    </button>
                 </nav>
 
                 <div className="sidebar-stats">
@@ -194,7 +163,7 @@ export default function HomePage() {
 
                     {/* Level Nodes - Planets */}
                     <div className="nodes-container">
-                        {levels.map((level, index) => (
+                        {worlds.map((level, index) => (
                             <div
                                 key={level.id}
                                 className="node-wrapper"
@@ -207,8 +176,8 @@ export default function HomePage() {
                                     onClick={() => handleTravelToWorld(level)}
                                     disabled={level.status === "locked"}
                                     style={{
-                                        '--planet-color': level.color,
-                                    } as React.CSSProperties}
+                                        "--planet-color": level.color,
+                                    } as CSSProperties}
                                 >
                                     <div className="planet-surface">
                                         <span className="node-icon">{level.icon}</span>
@@ -241,45 +210,57 @@ export default function HomePage() {
                     <div className="level-detail">
                         <div className="detail-header">
                             <span className="detail-icon">
-                                {levels.find(l => l.id === selectedLevel)?.icon}
+                                {selectedWorld?.icon}
                             </span>
-                            <h2>{levels.find(l => l.id === selectedLevel)?.title}</h2>
+                            <h2>{selectedWorld?.title}</h2>
                         </div>
                         <div className="detail-content">
                             <div className="detail-xp">
                                 <span>💎</span>
-                                <span>+{levels.find(l => l.id === selectedLevel)?.xp} XP</span>
+                                <span>+{selectedWorld?.xp} XP</span>
                             </div>
                             <p className="detail-description">
-                                Learn the fundamentals of {levels.find(l => l.id === selectedLevel)?.title.toLowerCase()} 
-                                and practice with interactive challenges.
+                                {selectedWorld?.description}
                             </p>
                             <div className="detail-progress">
                                 <span>Progress</span>
                                 <div className="progress-bar">
                                     <div 
                                         className="progress-fill"
-                                        style={{ 
-                                            width: levels.find(l => l.id === selectedLevel)?.status === "completed" 
-                                                ? "100%" 
-                                                : levels.find(l => l.id === selectedLevel)?.status === "current"
-                                                ? "35%"
-                                                : "0%"
-                                        }}
+                                        style={{ width: `${getWorldProgress(selectedWorld?.status ?? "locked")}%` }}
                                     ></div>
+                                </div>
+                            </div>
+                            <div className="world-preview">
+                                <span className="world-preview-label">Lesson Preview</span>
+                                <div className="world-preview-list">
+                                    {selectedWorld?.lessons.slice(0, 4).map((lesson) => (
+                                        <button
+                                            key={lesson.path}
+                                            type="button"
+                                            className="world-preview-item"
+                                            onClick={() => router.push(lesson.path)}
+                                        >
+                                            <span>{lesson.title}</span>
+                                            <span className="world-preview-arrow">→</span>
+                                        </button>
+                                    ))}
                                 </div>
                             </div>
                             <button 
                                 className="start-button travel-button"
                                 onClick={() => {
-                                    const level = levels.find(l => l.id === selectedLevel);
+                                    const level = selectedLevel === null ? null : getWorldById(selectedLevel);
                                     if (level) handleTravelToWorld(level);
                                 }}
                             >
-                                🚀 {levels.find(l => l.id === selectedLevel)?.status === "completed" 
+                                🚀 {selectedWorld?.status === "completed" 
                                     ? "Revisit World" 
                                     : "Travel to World"}
                             </button>
+                            <Link href="/homepage/curriculum" className="curriculum-link">
+                                Browse all lessons
+                            </Link>
                         </div>
                     </div>
                 ) : (
@@ -291,8 +272,14 @@ export default function HomePage() {
 
                 <div className="daily-challenge">
                     <h3>🎯 Daily Challenge</h3>
-                    <p>Solve today&apos;s algorithm puzzle</p>
-                    <button className="challenge-button">Start Challenge</button>
+                    <p>{dailyChallenge.worldTitle}: {dailyChallenge.title}</p>
+                    <button
+                        type="button"
+                        className="challenge-button"
+                        onClick={() => router.push(dailyChallenge.path)}
+                    >
+                        Start Challenge
+                    </button>
                 </div>
             </aside>
         </div>
