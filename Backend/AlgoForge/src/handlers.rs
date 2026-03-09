@@ -1,5 +1,5 @@
 use axum::{
-    extract::State,
+    extract::{Query, State},
     http::{header, HeaderMap},
     Json,
 };
@@ -16,6 +16,11 @@ use crate::auth::{
 pub struct AppState {
     pub db: PgPool,
     pub jwt_secret: String,
+}
+
+#[derive(serde::Deserialize, Default)]
+pub struct ProfileQuery {
+    pub preview: Option<bool>,
 }
 
 pub async fn signup(
@@ -97,28 +102,40 @@ pub async fn login(
 
 pub async fn profile(
     State(state): State<AppState>,
+    Query(query): Query<ProfileQuery>,
     headers: HeaderMap,
 ) -> Result<Json<ProfileResponse>, AuthError> {
-    let auth_header = headers
+    let preview_mode = query.preview.unwrap_or(false);
+
+    let user = match headers
         .get(header::AUTHORIZATION)
         .and_then(|value| value.to_str().ok())
-        .ok_or(AuthError::InvalidToken)?;
+        .and_then(|value| value.strip_prefix("Bearer "))
+    {
+        Some(token) => {
+            let claims = verify_token(token, &state.jwt_secret)?;
+            let user_id = Uuid::parse_str(&claims.sub).map_err(|_| AuthError::InvalidToken)?;
 
-    let token = auth_header
-        .strip_prefix("Bearer ")
-        .ok_or(AuthError::InvalidToken)?;
-
-    let claims = verify_token(token, &state.jwt_secret)?;
-    let user_id = Uuid::parse_str(&claims.sub).map_err(|_| AuthError::InvalidToken)?;
-
-    let user = sqlx::query_as::<_, User>(
-        "SELECT id, username, email, password_hash FROM users WHERE id = $1",
-    )
-    .bind(user_id)
-    .fetch_optional(&state.db)
-    .await
-    .map_err(|_| AuthError::InternalError)?
-    .ok_or(AuthError::InvalidToken)?;
+            sqlx::query_as::<_, User>(
+                "SELECT id, username, email, password_hash FROM users WHERE id = $1",
+            )
+            .bind(user_id)
+            .fetch_optional(&state.db)
+            .await
+            .map_err(|_| AuthError::InternalError)?
+            .ok_or(AuthError::InvalidToken)?
+        }
+        None if preview_mode => {
+            sqlx::query_as::<_, User>(
+                "SELECT id, username, email, password_hash FROM users ORDER BY username ASC LIMIT 1",
+            )
+            .fetch_optional(&state.db)
+            .await
+            .map_err(|_| AuthError::InternalError)?
+            .ok_or(AuthError::InvalidToken)?
+        }
+        None => return Err(AuthError::InvalidToken),
+    };
 
     Ok(Json(ProfileResponse {
         user: UserResponse {

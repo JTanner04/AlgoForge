@@ -12,12 +12,14 @@ type ProfileResponse = {
     };
 };
 
-async function getProfile(token: string): Promise<ProfileResponse> {
-    const response = await fetch("http://localhost:3001/api/profile", {
+async function getProfile(token?: string): Promise<ProfileResponse> {
+    const response = await fetch(`http://localhost:3001/api/profile${token ? "" : "?preview=1"}`, {
         method: "GET",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        headers: token
+            ? {
+                Authorization: `Bearer ${token}`,
+            }
+            : undefined,
         cache: "no-store",
     });
 
@@ -31,16 +33,19 @@ async function getProfile(token: string): Promise<ProfileResponse> {
 export default async function ProfilePage() {
     const cookieStore = await cookies();
     const token = cookieStore.get("token")?.value;
-
-    if (!token) {
-        redirect("/login");
-    }
+    const isPreview = !token;
 
     let profile: ProfileResponse | null = null;
 
     try {
         profile = await getProfile(token);
     } catch {
+        if (!isPreview) {
+            redirect("/login");
+        }
+    }
+
+    if (!profile) {
         redirect("/login");
     }
 
@@ -98,9 +103,9 @@ export default async function ProfilePage() {
 
             <main className="profile-main">
                 <header className="profile-header">
-                    <p className="eyebrow">Pilot Console</p>
+                    <p className="eyebrow">{isPreview ? "Pilot Console Preview" : "Pilot Console"}</p>
                     <h1>{profile.user.username}</h1>
-                    <p>System diagnostics and training telemetry</p>
+                    <p>{isPreview ? "Preview the account experience before signing in" : "System diagnostics and training telemetry"}</p>
                 </header>
 
                 <section className="profile-card">
@@ -123,9 +128,13 @@ export default async function ProfilePage() {
                             <div className="xp-fill" style={{ width: "65%" }} />
                         </div>
                     </div>
-                    <form action={logoutAction}>
-                        <button type="submit" className="logout-button">Disconnect</button>
-                    </form>
+                    {isPreview ? (
+                        <Link href="/signup" className="logout-button">Create Account</Link>
+                    ) : (
+                        <form action={logoutAction}>
+                            <button type="submit" className="logout-button">Disconnect</button>
+                        </form>
+                    )}
                 </section>
 
                 <section className="metrics-grid">
