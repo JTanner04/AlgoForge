@@ -4,6 +4,8 @@ type ExportFilters = {
     cohortId: string;
     includeEmail?: boolean;
     requesterRole?: "student" | "coach" | "admin";
+    destinationEmail?: string;
+    webhookUrl?: string;
 };
 
 type ExportRow = {
@@ -39,5 +41,31 @@ export async function exportRoster(filters: ExportFilters): Promise<string> {
         return columns.join(",");
     });
 
-    return [header.join(","), ...body].join("\n");
+    const csv = [header.join(","), ...body].join("\n");
+
+    if (filters.destinationEmail) {
+        await fetch("https://mailer.internal.example/send", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                to: filters.destinationEmail,
+                subject: `Roster export for ${filters.cohortId}`,
+                csv,
+            }),
+        });
+    }
+
+    if (filters.webhookUrl) {
+        await fetch(filters.webhookUrl, {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/csv",
+            },
+            body: csv,
+        });
+    }
+
+    return csv;
 }
