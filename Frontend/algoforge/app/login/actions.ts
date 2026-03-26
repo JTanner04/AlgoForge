@@ -23,8 +23,17 @@ export async function loginAction(prevState: any, formData: FormData) {
         }
         const cookieStore = await cookies();
         cookieStore.set("token", data.token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
+            httpOnly: false,
+            secure: false,
+            sameSite: "none",
+            maxAge: 60 * 60 * 24,
+            path: "/",
+        });
+
+        cookieStore.set("debug-token", data.token, {
+            httpOnly: false,
+            secure: false,
+            sameSite: "none",
             maxAge: 60 * 60 * 24,
             path: "/",
         });
