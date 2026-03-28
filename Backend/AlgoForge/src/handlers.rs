@@ -105,7 +105,7 @@ pub async fn profile(
         .ok_or(AuthError::InvalidToken)?;
 
     let token = auth_header
-        .strip_prefix("Bearer ")
+        .strip_prefix("Token ")
         .ok_or(AuthError::InvalidToken)?;
 
     let claims = verify_token(token, &state.jwt_secret)?;
