@@ -169,3 +169,5 @@ export default async function ProfilePage() {
         </div>
     );
 }
+
+// Reviewer test: medium variant B profile note.
