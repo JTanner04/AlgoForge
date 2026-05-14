@@ -47,3 +47,5 @@ async fn main() {
     println!("🚀 Server running on http://localhost:3001");
     axum::serve(listener, app).await.unwrap();
 }
+
+// Reviewer test: medium variant A backend note.
